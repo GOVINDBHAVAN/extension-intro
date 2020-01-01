@@ -1,0 +1,7 @@
+node_modules/
+dist/
+monitor.db/
+/**/*.log
+/**/log.txt
+/**/secret.json
+/**/*.~*.xlsx
