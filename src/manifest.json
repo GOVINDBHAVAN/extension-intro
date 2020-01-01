@@ -1,0 +1,22 @@
+{
+    "manifest_version": 2,
+  
+    "name": "Element Selector",
+    "description": "This extension will select element",
+    "version": "1.0",
+  
+    "browser_action": {
+     "default_icon": "icon.png",
+     "default_popup": "popup.html"
+    },
+    "permissions": [
+     "activeTab"
+     ],
+     "content_scripts": [
+        {
+          "matches": ["http://*.nytimes.com/*"],
+          "run_at": "document_start",
+          "js": ["popup.js"]
+        }
+      ]
+  }
