@@ -175,6 +175,6 @@ var DomOutline = function (options) {
 
     return pub;
 };
-console.log('DomOutline', DomOutline);
+// console.log('DomOutline', DomOutline);
 
 window.DomOutline = DomOutline;
