@@ -5,3 +5,10 @@ git pull https://github.com/GOVINDBHAVAN/extension-intro
 
 to push without need to specify git hub location
 git remote add origin git@github.com:GOVINDBHAVAN/extension-intro.git
+
+
+git remote set-url origin https://github.com/GOVINDBHAVAN/extension-intro.git
+
+otherwise need to specify branch every time
+git push --set-upstream origin master
+git pull --set-upstream origin master
