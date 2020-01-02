@@ -2,3 +2,6 @@
 git init
 git checkout -t -b extension-intro
 git pull https://github.com/GOVINDBHAVAN/extension-intro
+
+to push without need to specify git hub location
+git remote add origin git@github.com:GOVINDBHAVAN/extension-intro.git
