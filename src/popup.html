@@ -1,11 +1,31 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Element Selector</title>
-    <script src="popup.js"></script>
-  </head>
-  <body>
-    <h1>Drag over element to select</h1>
-    <button id="checkPage">Check this page now!</button>
-  </body>
+
+<head>
+  <title>Element Selector</title>
+  <script src="jquery.min.js"></script>
+  <script src="jquery.dom-outline-1.0.js"></script>
+  <script src="popup.js"></script>
+  <style type="text/css">
+    #mouseover_overlay {
+      position: fixed;
+      z-index: 999999999999999;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      background: rgba(0, 100, 255, 0.3);
+      pointer-events: none;
+      transition: 0.2s;
+      /* Just for fun */
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Drag over element to select</h1>
+  <button id="btnStart">Start</button>
+  <button id="btnEnd">End</button>
+</body>
+
 </html>

@@ -1,0 +1,4 @@
+# to checkout on another computer
+git init
+git checkout -t -b extension-intro
+git pull https://github.com/GOVINDBHAVAN/extension-intro
