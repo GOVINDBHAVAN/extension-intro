@@ -15,12 +15,8 @@
 var DomOutline = function (options) {
     // let c = $('#divCompanyName');
     // console.log('c', c);
-
-    options = options || {};
-    console.log('options.body',options.body);
-    console.log('$(this)',$(this));
     
-    var body = options.body || jQuery('body');
+    options = options || {};
 
     var pub = {};
     var self = {
@@ -77,18 +73,18 @@ var DomOutline = function (options) {
     }
 
     function createOutlineElements() {
-        // let c = jQuery('<div>HELLO</div>').appendTo(body);
-        //console.log('body', body);
-
-        self.elements.label = jQuery('<div></div>').addClass(self.opts.namespace + '_label').appendTo(body);
-        self.elements.top = jQuery('<div></div>').addClass(self.opts.namespace).appendTo(body);
-        self.elements.bottom = jQuery('<div></div>').addClass(self.opts.namespace).appendTo(body);
-        self.elements.left = jQuery('<div></div>').addClass(self.opts.namespace).appendTo(body);
-        self.elements.right = jQuery('<div></div>').addClass(self.opts.namespace).appendTo(body);
+        // let c = jQuery('<div>HELLO</div>').appendTo('body');
+        // console.log('c',c);
+        
+        self.elements.label = jQuery('<div></div>').addClass(self.opts.namespace + '_label').appendTo('body');
+        self.elements.top = jQuery('<div></div>').addClass(self.opts.namespace).appendTo('body');
+        self.elements.bottom = jQuery('<div></div>').addClass(self.opts.namespace).appendTo('body');
+        self.elements.left = jQuery('<div></div>').addClass(self.opts.namespace).appendTo('body');
+        self.elements.right = jQuery('<div></div>').addClass(self.opts.namespace).appendTo('body');
     }
 
     function removeOutlineElements() {
-        jQuery.each(self.elements, function (name, element) {
+        jQuery.each(self.elements, function(name, element) {
             element.remove();
         });
     }
@@ -119,7 +115,7 @@ var DomOutline = function (options) {
             if (!jQuery(e.target).is(self.opts.filter)) {
                 return;
             }
-        }
+        }      
         pub.element = e.target;
 
         var b = self.opts.borderWidth;
@@ -158,11 +154,11 @@ var DomOutline = function (options) {
         if (self.active !== true) {
             self.active = true;
             createOutlineElements();
-            jQuery(body).on('mousemove.' + self.opts.namespace, updateOutlinePosition);
-            jQuery(body).on('keyup.' + self.opts.namespace, stopOnEscape);
+            jQuery('body').on('mousemove.' + self.opts.namespace, updateOutlinePosition);
+            jQuery('body').on('keyup.' + self.opts.namespace, stopOnEscape);
             if (self.opts.onClick) {
                 setTimeout(function () {
-                    jQuery(body).on('click.' + self.opts.namespace, function (e) {
+                    jQuery('body').on('click.' + self.opts.namespace, function(e){
                         if (self.opts.filter) {
                             if (!jQuery(e.target).is(self.opts.filter)) {
                                 return false;
@@ -178,7 +174,7 @@ var DomOutline = function (options) {
     pub.stop = function () {
         self.active = false;
         removeOutlineElements();
-        jQuery(body).off('mousemove.' + self.opts.namespace)
+        jQuery('body').off('mousemove.' + self.opts.namespace)
             .off('keyup.' + self.opts.namespace)
             .off('click.' + self.opts.namespace);
     };

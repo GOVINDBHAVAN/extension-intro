@@ -12,3 +12,10 @@ git remote set-url origin https://github.com/GOVINDBHAVAN/extension-intro.git
 otherwise need to specify branch every time
 git push --set-upstream origin master
 git pull --set-upstream origin master
+
+
+merging:
+git checkout extension-intro
+git pull origin extension-intro
+git checkout master
+git merge origin/extension-intro

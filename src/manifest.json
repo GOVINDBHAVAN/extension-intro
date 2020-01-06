@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "Element Selector",
+  "name": "My Element Selector",
   "description": "This extension will select element",
   "version": "1.0",
   "browser_action": {
-    "default_title": "Element Selector",
+    "default_title": "My Element Selector",
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
@@ -18,6 +18,7 @@
   ],
   "content_scripts": [
     {
+      "all_frames": true,
       "run_at": "document_end",
       "matches": [
         "http://*/*",
