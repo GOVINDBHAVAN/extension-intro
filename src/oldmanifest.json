@@ -5,7 +5,8 @@
   "version": "1.0",
   "browser_action": {
     "default_title": "My Element Selector",
-    "default_icon": "icon.png"
+    "default_icon": "icon.png",
+    //"default_popup": "popup.html"
   },
   "background": {
     "page": "background.html",
@@ -19,7 +20,6 @@
     "webNavigation",
     "contextMenus"
   ],
-  "content_security_policy": "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval' https://factohr.com https://app.factohr.com; connect-src https://factohr.com https://app.factohr.com",
   "content_scripts": [
     {
       "all_frames": true,
@@ -30,7 +30,8 @@
       ],
       "js": [
         "jquery.min.js",
-        "jquery.dom-outline-1.0.js"
+        "jquery.dom-outline-1.0.js",
+          "popup.js"
         ]
       }
     ]
