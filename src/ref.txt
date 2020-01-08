@@ -1,1 +1,4 @@
 https://stackoverflow.com/questions/42564490/highlight-webpage-element-when-hovering-over-elements-in-inspector-through-chrom
+
+vertical stepper
+https://codepen.io/shonihei/pen/JyGgwm
