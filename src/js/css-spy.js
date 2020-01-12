@@ -134,12 +134,15 @@ var onClickProcess = function (element, settings, comparedCSS) {
     // introInputProperties.push('step', obj.step);
     // introInputProperties.push('position', obj.position);
     // console.log('introInputProperties', introInputProperties);
-    
-    $.each(obj, function (prop, value) {
-        var html = "<div><label for=\"myonoffswitch-" + prop + "\">" + camelToDash(prop) + "</label>" +
-            "<div class=\"css-spy-switch-button\">" + switchButton(prop, value) + "</div></div>";
-            introHTMLArray.push(html);
-    });
+    var htmlMsg = "<div><label for=\"myonoffswitch-msg\">Msg</label>"
+    + "<input type=\"text\" name=\"firstname\" value=\"Mickey\">"
+    + "<input type=\"text\" id=\"msg\" value=\"" + obj.msg + "\" /></div>";
+    introHTMLArray.push(htmlMsg);
+    // $.each(obj, function (prop, value) {
+    //     var html = "<div><label for=\"myonoffswitch-" + prop + "\">" + camelToDash(prop) + "</label>" +
+    //         "<div class=\"css-spy-switch-button\">" + switchButton(prop, value) + "</div></div>";
+    //         introHTMLArray.push(html);
+    // });
 
     var introHTML = "<div class='css-spy-settings-content'>" +
         "<div class='css-spy-settings-label'>Properties:</div>" +
