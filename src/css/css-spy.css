@@ -443,3 +443,8 @@ iframe .DomOutline_label {
     display: inherit;
     z-index: inherit;    
 }
+
+
+div {
+    word-wrap: break-word;
+  }

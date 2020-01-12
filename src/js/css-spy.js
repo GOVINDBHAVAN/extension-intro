@@ -9,8 +9,9 @@ function camelToDash(s) {
 }
 
 function dashToCamel(s) {
-    return s.replace(/[-_]([a-z])/g, function(g) {
-        return g[1].toUpperCase(); });
+    return s.replace(/[-_]([a-z])/g, function (g) {
+        return g[1].toUpperCase();
+    });
 }
 
 function getCSS(css, comparedCSS, settings, element, showCompared) {
@@ -23,7 +24,7 @@ function getCSS(css, comparedCSS, settings, element, showCompared) {
     }
 
     var style = [];
-    $.each(css1, function(prop, value) {
+    $.each(css1, function (prop, value) {
         if (settings[dashToCamel(prop)]) {
             if (value === css2[prop]) {
                 additionalClass = "css-spy-same";
@@ -72,16 +73,17 @@ function getCSS(css, comparedCSS, settings, element, showCompared) {
 }
 
 // Function to call when click on element
-var onClickProcess = function(element, settings, comparedCSS) {
+var onClickProcess = function (element, settings, comparedCSS) {
     var cssProps = [];
     // Get all available css properties
-    $.each(settings, function(prop, value) {
+    $.each(settings, function (prop, value) {
         cssProps.push(camelToDash(prop));
     });
     var css = $(element).css(cssProps);
 
     var tabs = "<div class='css-spy-tabs'>" +
-        "<div class='css-spy-tab active' data-target='css-spy-element'>Element</div>" +
+        "<div class='css-spy-tab active' data-target='css-spy-intro'>Intro</div>" +
+        "<div class='css-spy-tab' data-target='css-spy-element'>Element</div>" +
         "<div class='css-spy-tab' data-target='css-spy-compare'>Compare</div>" +
         "<div class='css-spy-tab' data-target='css-spy-settings'>Settings</div>" +
         "</div>";
@@ -93,11 +95,11 @@ var onClickProcess = function(element, settings, comparedCSS) {
         "</div>";
 
     if (Object.keys(comparedCSS).length === 0) {
-        compareHTML  = "<div class='css-spy-compare-inner css-spy-compare-empty'>Nothing to compare here.</div>";
+        compareHTML = "<div class='css-spy-compare-inner css-spy-compare-empty'>Nothing to compare here.</div>";
     }
 
     // Process css value to show on setting tab
-    var switchButton = function(prop, checked) {
+    var switchButton = function (prop, checked) {
         return "<div class=\"css-spy-onoffswitch\">" +
             "<input data-prop=\"" + prop + "\" type=\"checkbox\" name=\"onoffswitch\" class=\"css-spy-onoffswitch-checkbox\" id=\"myonoffswitch-" + prop + "\" " + (checked ? "checked" : "") + ">" +
             "<label class=\"css-spy-onoffswitch-label\" for=\"myonoffswitch-" + prop + "\">" +
@@ -108,7 +110,7 @@ var onClickProcess = function(element, settings, comparedCSS) {
     };
 
     var settingHTMLArray = [];
-    $.each(settings, function(prop, value) {
+    $.each(settings, function (prop, value) {
         var html = "<div><label for=\"myonoffswitch-" + prop + "\">" + camelToDash(prop) + "</label>" +
             "<div class=\"css-spy-switch-button\">" + switchButton(prop, value) + "</div></div>";
         settingHTMLArray.push(html);
@@ -117,16 +119,46 @@ var onClickProcess = function(element, settings, comparedCSS) {
     var settingHTML = "<div class='css-spy-settings-content'>" +
         "<div class='css-spy-settings-label'>Choose CSS Properties to inspect:</div>" +
         "<div class='css-spy-settings-lists'>" + settingHTMLArray.join("\r\n") + "</div>" +
-    "</div>";
+        "</div>";
 
+    var pageUrl = document.URL;
+    if (window.frameElement) {
+        pageUrl = window.frameElement.src;
+    }
+    console.log('settings', settings);
+    
+    var introHTMLArray = [];
+    var obj = Util.getItem(pageUrl, element.id, true);
+    // var introInputProperties = [];
+    // introInputProperties.push('msg', obj.msg);
+    // introInputProperties.push('step', obj.step);
+    // introInputProperties.push('position', obj.position);
+    // console.log('introInputProperties', introInputProperties);
+    
+    $.each(obj, function (prop, value) {
+        var html = "<div><label for=\"myonoffswitch-" + prop + "\">" + camelToDash(prop) + "</label>" +
+            "<div class=\"css-spy-switch-button\">" + switchButton(prop, value) + "</div></div>";
+            introHTMLArray.push(html);
+    });
+
+    var introHTML = "<div class='css-spy-settings-content'>" +
+        "<div class='css-spy-settings-label'>Properties:</div>" +
+        "<div class='css-spy-settings-lists'>" + introHTMLArray.join("\r\n") + "</div>" +
+        "</div>";
     var finalHTML = tabs + "<div class='css-spy-content'>" +
-        "<div class='css-spy-element'>" + getCSS(css, comparedCSS, settings, element, false) + "</div>" +
+        "<div class='css-spy-intro'>" + introHTML + "</div>" +
+        "<div class='css-spy-element' style='display:none'>" + getCSS(css, comparedCSS, settings, element, false) + "</div>" +
         "<div class='css-spy-compare' style='display:none'>" + compareHTML + "</div>" +
         "<div class='css-spy-settings' style='display:none'>" + settingHTML + "</div>" +
         "</div>";
 
+    // console.log('element', element);
+    // console.log('window.top', window.top);
+    // console.log('window.parent', window.parent);
+    // console.log('window.frameElement', window.frameElement);
+
     swal({
-        title: "CSS Extracted!",
+        title: "Add Help to " + pageUrl,
         showCancelButton: true,
         cancelButtonText: "Close",
         text: finalHTML,
@@ -134,15 +166,15 @@ var onClickProcess = function(element, settings, comparedCSS) {
         confirmButtonText: "Compare",
         html: true,
         closeOnConfirm: false
-    }, function() {
-        chrome.storage.sync.set({ comparedCSS: css }, function() {
+    }, function () {
+        chrome.storage.sync.set({ comparedCSS: css }, function () {
             swal("Good job!", "Successfully copied as comparison!", "success");
         });
     });
 };
 
-var onClick = function(element) {
-    chrome.storage.sync.get(['cssValue', 'comparedCSS'], function(data) {
+var onClick = function (element) {
+    chrome.storage.sync.get(['cssValue', 'comparedCSS'], function (data) {
         var cssValue = data.cssValue;
         var comparedCSS = data.comparedCSS;
         onClickProcess(element, cssValue, comparedCSS);
@@ -158,7 +190,7 @@ var myDomOutline = DomOutline({
 });
 
 // Listen to background
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     var value = request.value;
     switch (request.type) {
         case "stateChange":
@@ -172,18 +204,18 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 // Handle compared reset
-jQuery(document).on("click", ".css-spy-compared-reset", function(){
-    chrome.storage.sync.set({ comparedCSS: {} }, function(){
+jQuery(document).on("click", ".css-spy-compared-reset", function () {
+    chrome.storage.sync.set({ comparedCSS: {} }, function () {
         jQuery(".css-spy-compare").html("<div class='css-spy-compare-inner css-spy-compare-empty'>Nothing to compare here.</div>");
     });
 });
 
 // Handle the switch button
 
-jQuery(document).on("click", ".css-spy-onoffswitch-checkbox", function() {
+jQuery(document).on("click", ".css-spy-onoffswitch-checkbox", function () {
     var prop = jQuery(this).data("prop");
     var value = $(this).is(':checked');
-    chrome.storage.sync.get('cssValue', function(data) {
+    chrome.storage.sync.get('cssValue', function (data) {
         var cssValue = data.cssValue;
         cssValue[prop] = value;
         // Save the setting
@@ -193,7 +225,7 @@ jQuery(document).on("click", ".css-spy-onoffswitch-checkbox", function() {
 
 
 // Handle the tabs change
-jQuery(document).on("click", ".css-spy-tab", function() {
+jQuery(document).on("click", ".css-spy-tab", function () {
     var target = jQuery(this).data("target");
     // Hide all tab content
     jQuery(".css-spy-content > div").hide();

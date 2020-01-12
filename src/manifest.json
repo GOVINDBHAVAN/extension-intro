@@ -9,7 +9,7 @@
    "content_scripts": [ {
       "all_frames": true,
       "css": [ "css/css-spy.css", "css/sweetalert.css" ],
-      "js": [ "js/jquery-2.2.3.min.js", "js/jquery.dom-outline-1.0.js", "js/selectorator.min.js", "js/css-spy.js", "js/sweetalert.min.js" ],
+      "js": [ "js/jquery-2.2.3.min.js", "js/jquery.dom-outline-1.0.js", "js/selectorator.min.js", "js/data.js", "js/css-spy.js", "js/sweetalert.min.js" ],
       "matches": [ "http://*/*", "https://*/*" ]
    } ],
    "description": "My Showing CSS attribute on element hover",
