@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+  "name": "Element Selector",
+  "description": "This extension will select element",
+  "version": "1.0",
+  "browser_action": {
+    "default_title": "Element Selector",
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "https://*/*",
+    "http://*/*",
+    "tabs",
+    "webNavigation",
+    "contextMenus"
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "jquery.min.js",
+        "jquery.dom-outline-1.0.js",
+          "popup.js"
+        ]
+      }
+    ]
+  }

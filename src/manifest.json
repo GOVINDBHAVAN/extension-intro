@@ -1,37 +1,29 @@
 {
-  "manifest_version": 2,
-  "name": "My Element Selector",
-  "description": "This extension will select element",
-  "version": "1.0",
-  "browser_action": {
-    "default_title": "My Element Selector",
-    "default_icon": "icon.png"
-  },
-  "background": {
-    "page": "background.html",
-    "persistent": true
- },
-  "permissions": [
-    "activeTab",
-    "https://*/*",
-    "http://*/*",
-    "tabs",
-    "webNavigation",
-    "contextMenus"
-  ],
-  "content_security_policy": "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval' https://factohr.com https://app.factohr.com; connect-src https://factohr.com https://app.factohr.com",
-  "content_scripts": [
-    {
+   "author": "",
+   "background": {
+      "scripts": [ "js/background.js" ]
+   },
+   "browser_action": {
+      "default_icon": "images/icon48.png"
+   },
+   "content_scripts": [ {
       "all_frames": true,
-      "run_at": "document_end",
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "js": [
-        "jquery.min.js",
-        "jquery.dom-outline-1.0.js"
-        ]
-      }
-    ]
-  }
+      "css": [ "css/css-spy.css", "css/sweetalert.css" ],
+      "js": [ "js/jquery-2.2.3.min.js", "js/jquery.dom-outline-1.0.js", "js/selectorator.min.js", "js/data.js", "js/css-spy.js", "js/sweetalert.min.js" ],
+      "matches": [ "http://*/*", "https://*/*" ]
+   } ],
+   "description": "My Showing CSS attribute on element hover",
+   "icons": {
+      "128": "images/icon128.png",
+      "16": "images/icon16.png",
+      "48": "images/icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh0JwxNASMyuKQPsAs1FT4jfBrGRKfVgLA2g7wSkb5ZujXoRpavp5IrCsweUAHHO4TZNEn6MUNNbaTx3/Bz9fXbci60h4i1mg8Wr9baeUDhTMsHVFwePZm/rDsHUTRov/h894tPwmejIn+fkhQY+gIafYi1tqvYTFgqlV0a2v/AOSsAzL6K0VG758Cn5MulqRXve93T2imwI2xTLaybA/YVJVIL3l5pMp9/VO3IHkzJYvJOMd6XX0bfmuQoj+6TIG0BshuI4k0wPGQDFsMouY73HTTQ+AkDCp1nWit21aB2Z7xFkwns2g7IJMcnjHyM/RhJlcGAKnpoJo3DWgqeMjLwIDAQAB",
+   "manifest_version": 2,
+   "name": "My CSS Spy",
+   "offline_enabled": false,
+   "permissions": [ "tabs", "http://*/*", "https://*/*", "storage", "activeTab" ],
+   "short_name": "my-css-spy",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.5"
+}
