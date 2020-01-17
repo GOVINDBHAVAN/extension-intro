@@ -126,6 +126,13 @@ var onClickProcess = function (element, settings, comparedCSS) {
         pageUrl = window.frameElement.src;
     }
     console.log('settings', settings);
+
+    var inputHTML = "<div id='myModal' class='modal'>"+
+    "<div class='modal-content' style='display=block'>"+
+      "<span class='close'>&times;</span>"+
+      "<p>Some text in the Modal..</p>"+
+      "</div>"+
+  "</div>";
     
     var introHTMLArray = [];
     var obj = Util.getItem(pageUrl, element.id, true);
@@ -164,7 +171,7 @@ var onClickProcess = function (element, settings, comparedCSS) {
         title: "Add Help to " + pageUrl,
         showCancelButton: true,
         cancelButtonText: "Close",
-        text: finalHTML,
+        text: inputHTML,
         type: "success",
         confirmButtonText: "Compare",
         html: true,
