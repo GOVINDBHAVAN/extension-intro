@@ -82,10 +82,10 @@ var onClickProcess = function (element, settings, comparedCSS) {
     var css = $(element).css(cssProps);
 
     var tabs = "<div class='css-spy-tabs'>" +
-        "<div class='css-spy-tab active' data-target='css-spy-intro'>Intro</div>" +
-        "<div class='css-spy-tab' data-target='css-spy-element'>Element</div>" +
-        "<div class='css-spy-tab' data-target='css-spy-compare'>Compare</div>" +
-        "<div class='css-spy-tab' data-target='css-spy-settings'>Settings</div>" +
+        "<div class='css-spy-tab active' data-target='css-spy-intro'>Configure Instant Help</div>" +
+        // "<div class='css-spy-tab' data-target='css-spy-element'>Element</div>" +
+        // "<div class='css-spy-tab' data-target='css-spy-compare'>Compare</div>" +
+        // "<div class='css-spy-tab' data-target='css-spy-settings'>Settings</div>" +
         "</div>";
 
     var compareHTML = "<div class='css-spy-compared-reset'><span>Reset compared element</span></div>" +
@@ -109,41 +109,52 @@ var onClickProcess = function (element, settings, comparedCSS) {
             "</div>";
     };
 
-    var settingHTMLArray = [];
-    $.each(settings, function (prop, value) {
-        var html = "<div><label for=\"myonoffswitch-" + prop + "\">" + camelToDash(prop) + "</label>" +
-            "<div class=\"css-spy-switch-button\">" + switchButton(prop, value) + "</div></div>";
-        settingHTMLArray.push(html);
-    });
+    // var settingHTMLArray = [];
+    // $.each(settings, function (prop, value) {
+    //     var html = "<div><label for=\"myonoffswitch-" + prop + "\">" + camelToDash(prop) + "</label>" +
+    //         "<div class=\"css-spy-switch-button\">" + switchButton(prop, value) + "</div></div>";
+    //     settingHTMLArray.push(html);
+    // });
 
-    var settingHTML = "<div class='css-spy-settings-content'>" +
-        "<div class='css-spy-settings-label'>Choose CSS Properties to inspect:</div>" +
-        "<div class='css-spy-settings-lists'>" + settingHTMLArray.join("\r\n") + "</div>" +
-        "</div>";
+    // var settingHTML = "<div class='css-spy-settings-content'>" +
+    //     "<div class='css-spy-settings-label'>Choose CSS Properties to inspect:</div>" +
+    //     "<div class='css-spy-settings-lists'>" + settingHTMLArray.join("\r\n") + "</div>" +
+    //     "</div>";
 
     var pageUrl = document.URL;
     if (window.frameElement) {
         pageUrl = window.frameElement.src;
     }
-    console.log('settings', settings);
+    // console.log('settings', settings);
 
-    var inputHTML = "<div id='myModal' class='modal'>"+
-    "<div class='modal-content' style='display=block'>"+
-      "<span class='close'>&times;</span>"+
-      "<p>Some text in the Modal..</p>"+
-      "</div>"+
-  "</div>";
-    
+//     var inputHTML = "<div id='myModal' class='modal'>"+
+//     "<div class='modal-content' style='display=block'>"+
+//       "<span class='close'>&times;</span>"+
+//       "<p>Some text in the Modal..</p>"+
+//       "</div>"+
+//   "</div>";
+   
+
     var introHTMLArray = [];
     var obj = Util.getItem(pageUrl, element.id, true);
+    console.log('obj', obj);
+    
     // var introInputProperties = [];
     // introInputProperties.push('msg', obj.msg);
     // introInputProperties.push('step', obj.step);
     // introInputProperties.push('position', obj.position);
     // console.log('introInputProperties', introInputProperties);
-    var htmlMsg = "<div><label for=\"myonoffswitch-msg\">Msg</label>"
-    + "<input type=\"text\" name=\"firstname\" value=\"Mickey\">"
-    + "<input type=\"text\" id=\"msg\" value=\"" + obj.msg + "\" /></div>";
+    var htmlMsg = "<form id=\"frmIntro\" action=\"api/system/isdebug\"><div>"
+    // if (!obj.msg) {
+    //     obj.msg = "this is text"
+    // }
+//    + "<input type=\"button\" value=\"Add to favorites\"><label for=\"myonoffswitch-msg\">Msg</label>"
+    + "<input placeholder=\"Element Id\" class=\"myText\" type=\"hidden\" id=\"txtIntroPageUrl\" name=\"txtIntroPageUrl\" value=\"" + obj.pageUrl + "\" ><label>ABC</label>"
+    + "<input placeholder=\"Element Id\" required readonly class=\"myText\" type=\"text\" id=\"txtIntroElementId\" name=\"txtIntroElementId\" value=\"" + obj.elementId + "\" ><label>EFG</label>"
+    + "<input placeholder=\"Enter Message\" required tabindex=\"1\" class=\"myText\" type=\"text\" id=\"txtIntroMsg\" name=\"txtIntroMsg\" value=\"" + obj.msg + "\" ><label>HIJ</label>"
+    + "<input placeholder=\"Enter Step Number\" required tabindex=\"2\" class=\"myText\" type=\"text\" id=\"txtIntroStep\" name=\"txtIntroStep\" value=\"" + obj.step + "\"><label>QPR</label>"
+    + "<input placeholder=\"Enter Position (right or left)\" tabindex=\"3\" class=\"myText\" type=\"text\" id=\"txtIntroPosition\" name=\"txtIntroPosition\" value=\"" + obj.position + "\"><label>XYZ</label>"
+    + "</div></form>";
     introHTMLArray.push(htmlMsg);
     // $.each(obj, function (prop, value) {
     //     var html = "<div><label for=\"myonoffswitch-" + prop + "\">" + camelToDash(prop) + "</label>" +
@@ -152,14 +163,14 @@ var onClickProcess = function (element, settings, comparedCSS) {
     // });
 
     var introHTML = "<div class='css-spy-settings-content'>" +
-        "<div class='css-spy-settings-label'>Properties:</div>" +
+        // "<div class='css-spy-settings-label'>Properties:</div>" +
         "<div class='css-spy-settings-lists'>" + introHTMLArray.join("\r\n") + "</div>" +
         "</div>";
     var finalHTML = tabs + "<div class='css-spy-content'>" +
         "<div class='css-spy-intro'>" + introHTML + "</div>" +
-        "<div class='css-spy-element' style='display:none'>" + getCSS(css, comparedCSS, settings, element, false) + "</div>" +
-        "<div class='css-spy-compare' style='display:none'>" + compareHTML + "</div>" +
-        "<div class='css-spy-settings' style='display:none'>" + settingHTML + "</div>" +
+        //"<div class='css-spy-element' style='display:none'>" + getCSS(css, comparedCSS, settings, element, false) + "</div>" +
+        //"<div class='css-spy-compare' style='display:none'>" + compareHTML + "</div>" +
+        //"<div class='css-spy-settings' style='display:none'>" + settingHTML + "</div>" +
         "</div>";
 
     // console.log('element', element);
@@ -167,18 +178,22 @@ var onClickProcess = function (element, settings, comparedCSS) {
     // console.log('window.parent', window.parent);
     // console.log('window.frameElement', window.frameElement);
 
+    setTimeout(function() { $("#txtIntroMsg").focus();}, 500);
+
     swal({
-        title: "Add Help to " + pageUrl,
+        title: "Adding Help to <strong>" + pageUrl + "</strong>",
         showCancelButton: true,
         cancelButtonText: "Close",
-        text: inputHTML,
+        text: finalHTML,
         type: "success",
-        confirmButtonText: "Compare",
+        confirmButtonText: "Update",
         html: true,
         closeOnConfirm: false
     }, function () {
         chrome.storage.sync.set({ comparedCSS: css }, function () {
-            swal("Good job!", "Successfully copied as comparison!", "success");
+            let form = $("#frmIntro");
+            console.log('form', form);            
+            swal("Good job!", "Successfully added help in system", "success");
         });
     });
 };
@@ -247,9 +262,9 @@ jQuery(document).on("click", ".css-spy-tab", function () {
 });
 
 
-// //GB:070120 to hide sweet-overlay for iframe content
-// $(function() {
-//     if (window.self != window.top) {
-//       $(document.body).addClass("in-iframe");
-//     }
-//   });
+//GB:070120 to hide sweet-overlay for iframe content
+$(function() {
+    if (window.self != window.top) {
+      $(document.body).addClass("in-iframe");
+    }
+  });

@@ -10,7 +10,7 @@ class Util {
     static data = [];
     static deleteItem(d) {
         let o = this.toObj(d);
-        let found = this.getItem(o.pageUrl, o.elementId);
+        let found = this.getItem(o.pageUrl, o.elementId, false);
         console.log('delete found', found);
         if (!found) {
             let index = Util.data.indexOf(found);
@@ -23,7 +23,7 @@ class Util {
     }
     static addItem(d) {
         let o = this.toObj(d);
-        let found = this.getItem(o.pageUrl, o.elementId);
+        let found = this.getItem(o.pageUrl, o.elementId, true);
         if (!found) {
             console.log('adding', o);
             Util.data.push(o);
@@ -45,6 +45,16 @@ class Util {
           });
         if (createNew && !rtn) {
             rtn = new HelpData();
+            rtn.pageUrl = pageUrl;
+            rtn.elementId = elementId;
+            rtn.position = 'right';
+            rtn.step = 1;
+            Util.data.forEach((d, index, arr) => {
+                if (d.pageUrl === pageUrl
+                    && rtn.step < d.step) {
+                    rtn.step = d.step + 1;
+                }
+              });
         }
         return rtn;
     }

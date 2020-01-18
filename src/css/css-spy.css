@@ -418,30 +418,30 @@
 
 
 /* .in-iframe p {
-    background: purple;
+    background: purple !important;
   } */
 .sweet-overlay iframe {
     /*note to apply overlay on iframe*/
-    background-color: inherit;
-    position: inherit;
-    left: inherit;
-    right: inherit;
-    top: inherit;
-    bottom: inherit;
-    display: inherit;
-    z-index: inherit;    
+    background-color: inherit !important;
+    position: inherit !important;
+    left: inherit !important;
+    right: inherit !important;
+    top: inherit !important;
+    bottom: inherit !important;
+    display: inherit !important;
+    z-index: inherit !important;
 }  
 
 iframe .DomOutline_label {
     /*note to apply overlay on iframe*/
-    background-color: inherit;
-    position: inherit;
-    left: inherit;
-    right: inherit;
-    top: inherit;
-    bottom: inherit;
-    display: inherit;
-    z-index: inherit;    
+    background-color: inherit !important;
+    position: inherit !important;
+    left: inherit !important;
+    right: inherit !important;
+    top: inherit !important;
+    bottom: inherit !important;
+    display: inherit !important;
+    z-index: inherit !important;
 }
 
 
