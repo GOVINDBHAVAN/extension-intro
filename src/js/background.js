@@ -156,6 +156,7 @@ function tabOnChange() {
             lastFocusedWindow: true
         }, function(tabs) {
             var tab = tabs[0];
+            if (!tab || !tab.url) return;
             var state = data.urls[tab.url];
             if (state === undefined) {
                 // set default state for page

@@ -136,7 +136,8 @@ var onClickProcess = function (element, settings, comparedCSS) {
    
 
     var introHTMLArray = [];
-    var obj = Util.getItem(pageUrl, element.id, true);
+    //debugger;
+    var obj = Util.getItem(pageUrl, element.id, true, false);
     console.log('obj', obj);
     
     // var introInputProperties = [];
@@ -149,11 +150,11 @@ var onClickProcess = function (element, settings, comparedCSS) {
     //     obj.msg = "this is text"
     // }
 //    + "<input type=\"button\" value=\"Add to favorites\"><label for=\"myonoffswitch-msg\">Msg</label>"
-    + "<input placeholder=\"Element Id\" class=\"myText\" type=\"hidden\" id=\"txtIntroPageUrl\" name=\"txtIntroPageUrl\" value=\"" + obj.pageUrl + "\" ><label>ABC</label>"
-    + "<input placeholder=\"Element Id\" required readonly class=\"myText\" type=\"text\" id=\"txtIntroElementId\" name=\"txtIntroElementId\" value=\"" + obj.elementId + "\" ><label>EFG</label>"
-    + "<input placeholder=\"Enter Message\" required tabindex=\"1\" class=\"myText\" type=\"text\" id=\"txtIntroMsg\" name=\"txtIntroMsg\" value=\"" + obj.msg + "\" ><label>HIJ</label>"
-    + "<input placeholder=\"Enter Step Number\" required tabindex=\"2\" class=\"myText\" type=\"text\" id=\"txtIntroStep\" name=\"txtIntroStep\" value=\"" + obj.step + "\"><label>QPR</label>"
-    + "<input placeholder=\"Enter Position (right or left)\" tabindex=\"3\" class=\"myText\" type=\"text\" id=\"txtIntroPosition\" name=\"txtIntroPosition\" value=\"" + obj.position + "\"><label>XYZ</label>"
+    + "<label>Page Url</label><input placeholder=\"Element Id\" class=\"myText\" type=\"hidden\" id=\"txtIntroPageUrl\" name=\"txtIntroPageUrl\" value=\"" + obj.pageUrl + "\" >"
+    + "<label>Element Id</label><input placeholder=\"Element Id\" required readonly class=\"myText\" type=\"text\" id=\"txtIntroElementId\" name=\"txtIntroElementId\" value=\"" + obj.elementId + "\" >"
+    + "<label>Help Message</label><input placeholder=\"Enter Message\" required tabindex=\"1\" class=\"myText\" type=\"text\" id=\"txtIntroMsg\" name=\"txtIntroMsg\" value=\"" + obj.msg + "\" >"
+    + "<label>Step Number</label><input placeholder=\"Enter Step Number\" required tabindex=\"2\" class=\"myText\" type=\"text\" id=\"txtIntroStep\" name=\"txtIntroStep\" value=\"" + obj.step + "\">"
+    + "<label>Display Position</label><input placeholder=\"Enter Position (right or left)\" tabindex=\"3\" class=\"myText\" type=\"text\" id=\"txtIntroPosition\" name=\"txtIntroPosition\" value=\"" + obj.position + "\">"
     + "</div></form>";
     introHTMLArray.push(htmlMsg);
     // $.each(obj, function (prop, value) {
@@ -192,8 +193,14 @@ var onClickProcess = function (element, settings, comparedCSS) {
     }, function () {
         chrome.storage.sync.set({ comparedCSS: css }, function () {
             let form = $("#frmIntro");
-            console.log('form', form);            
-            swal("Good job!", "Successfully added help in system", "success");
+            let obj = Util.getFormData(form);
+            if (!obj.pageUrl || !obj.elementId) {
+                swal("Please select element", "Element is not selected, please check", "failed");
+            }
+            else {
+                Util.addItem(obj);
+                swal("Good job!", "Successfully added help in system", "success");
+            }
         });
     });
 };

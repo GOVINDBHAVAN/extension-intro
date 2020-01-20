@@ -9,8 +9,8 @@ class HelpData {
 class Util {
     static data = [];
     static deleteItem(d) {
-        let o = this.toObj(d);
-        let found = this.getItem(o.pageUrl, o.elementId, false);
+        let o = Util.toObj(d);
+        let found = Util.getItem(o.pageUrl, o.elementId, false, false);
         console.log('delete found', found);
         if (!found) {
             let index = Util.data.indexOf(found);
@@ -22,43 +22,101 @@ class Util {
         console.log('data', Util.data);
     }
     static addItem(d) {
-        let o = this.toObj(d);
-        let found = this.getItem(o.pageUrl, o.elementId, true);
+        debugger;
+        let o = Util.toObj(d);
+        let found = Util.getItem(o.pageUrl, o.elementId, true, true);
         if (!found) {
             console.log('adding', o);
             Util.data.push(o);
         }
         else {
-            console.log('already exists', found);
+            //console.log('already exists', found);
+            found = { ...found, ...o };
+            Util.updateItem(found);
         }
         console.log('data', Util.data);
     }
-    static getItem(pageUrl, elementId, createNew) {
+    static updateItem(item) {
+        Util.data.forEach((element, index) => {
+            if(element.pageUrl === item.pageUrl && element.elementId === item.elementId) {
+                Util.data[index] = item;
+            }
+        });
+    }
+    static getFormData(jqueryForm) {
+        var formData = jqueryForm.serializeArray();
+        var result = {};
+        $.each(formData, function () {
+            result[this.name] = this.value;
+        });
+        console.log('result', result);
+        
+        let pageUrl =  result.txtIntroPageUrl;
+        let elementId =  result.txtIntroElementId;
+        let msg =  result.txtIntroMsg;
+        let step =  result.txtIntroSte || 1;
+        let position =  result.txtIntroPosition || 'right';
+        if (!pageUrl || !elementId) {
+            return null;
+        }
+        else {
+            let rtn = Util.convertToObj(null, pageUrl, elementId, msg, step, position);
+            return rtn;
+        }
+    }
+    static getItem(pageUrl, elementId, createNew, addToData) {
         console.log('data', Util.data);
         let rtn = undefined;
+        let found = false;
         Util.data.forEach((d, index, arr) => {
             if (d.pageUrl === pageUrl && d.elementId === elementId) {
                 console.log('found at', index);
                 rtn = d;
+                found = true;
                 return d;
             }
           });
         if (createNew && !rtn) {
-            rtn = new HelpData();
-            rtn.pageUrl = pageUrl;
-            rtn.elementId = elementId;
-            rtn.position = 'right';
-            rtn.step = 1;
-            Util.data.forEach((d, index, arr) => {
-                if (d.pageUrl === pageUrl
-                    && rtn.step < d.step) {
-                    rtn.step = d.step + 1;
-                }
-              });
+            rtn = Util.convertToObj(rtn, pageUrl, elementId, '', 1, 'right');
+        }
+        if (!found && addToData && rtn) {
+            Util.data.push(rtn);
         }
         return rtn;
     }
-    toObj(d) {
+    static convertToObj(rtn, pageUrl, elementId
+        , msg, step, position) {
+        if (!rtn) { rtn = new HelpData(); }
+        rtn.pageUrl = pageUrl;
+        rtn.elementId = elementId;
+        rtn.msg = msg;
+        step = (step < 0 ? 1 : step);
+        rtn.step = step;
+        position = (!position ? 'right' : position);
+        rtn.position = position;
+        let maxStep = 0;
+        let foundCurrentStep = 0;
+        Util.data.forEach((d, index, arr) => {
+            if (d.pageUrl === pageUrl
+                && rtn.elementId != d.elementId
+                && maxStep < d.step) {
+                maxStep = d.step;
+            }
+            if (d.pageUrl === pageUrl
+                && rtn.elementId === d.elementId) {
+                foundCurrentStep = d.step;
+            }
+        });
+        if (maxStep > 0 && maxStep >= rtn.step) {
+            rtn.step = maxStep + 1;
+        }
+        if (foundCurrentStep > 0) {
+            rtn.step = foundCurrentStep;
+        }
+        return rtn;
+    }
+
+    static toObj(d) {
         let o = new HelpData();
         o = { ...d };
         return o;
