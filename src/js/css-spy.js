@@ -127,35 +127,35 @@ var onClickProcess = function (element, settings, comparedCSS) {
     }
     // console.log('settings', settings);
 
-//     var inputHTML = "<div id='myModal' class='modal'>"+
-//     "<div class='modal-content' style='display=block'>"+
-//       "<span class='close'>&times;</span>"+
-//       "<p>Some text in the Modal..</p>"+
-//       "</div>"+
-//   "</div>";
-   
+    //     var inputHTML = "<div id='myModal' class='modal'>"+
+    //     "<div class='modal-content' style='display=block'>"+
+    //       "<span class='close'>&times;</span>"+
+    //       "<p>Some text in the Modal..</p>"+
+    //       "</div>"+
+    //   "</div>";
+
 
     var introHTMLArray = [];
     //debugger;
     var obj = Util.getItem(pageUrl, element.id, true, false);
     console.log('obj', obj);
-    
+
     // var introInputProperties = [];
     // introInputProperties.push('msg', obj.msg);
     // introInputProperties.push('step', obj.step);
     // introInputProperties.push('position', obj.position);
     // console.log('introInputProperties', introInputProperties);
-    var htmlMsg = "<form id=\"frmIntro\" action=\"api/system/isdebug\"><div>"
-    // if (!obj.msg) {
-    //     obj.msg = "this is text"
-    // }
-//    + "<input type=\"button\" value=\"Add to favorites\"><label for=\"myonoffswitch-msg\">Msg</label>"
-    + "<label>Page Url</label><input placeholder=\"Element Id\" class=\"myText\" type=\"hidden\" id=\"txtIntroPageUrl\" name=\"txtIntroPageUrl\" value=\"" + obj.pageUrl + "\" >"
-    + "<label>Element Id</label><input placeholder=\"Element Id\" required readonly class=\"myText\" type=\"text\" id=\"txtIntroElementId\" name=\"txtIntroElementId\" value=\"" + obj.elementId + "\" >"
-    + "<label>Help Message</label><input placeholder=\"Enter Message\" required tabindex=\"1\" class=\"myText\" type=\"text\" id=\"txtIntroMsg\" name=\"txtIntroMsg\" value=\"" + obj.msg + "\" >"
-    + "<label>Step Number</label><input placeholder=\"Enter Step Number\" required tabindex=\"2\" class=\"myText\" type=\"text\" id=\"txtIntroStep\" name=\"txtIntroStep\" value=\"" + obj.step + "\">"
-    + "<label>Display Position</label><input placeholder=\"Enter Position (right or left)\" tabindex=\"3\" class=\"myText\" type=\"text\" id=\"txtIntroPosition\" name=\"txtIntroPosition\" value=\"" + obj.position + "\">"
-    + "</div></form>";
+    var htmlMsg = "<form id=\"frmIntro\" action=\"api/help/update\"><div>"
+        // if (!obj.msg) {
+        //     obj.msg = "this is text"
+        // }
+        //    + "<input type=\"button\" value=\"Add to favorites\"><label for=\"myonoffswitch-msg\">Msg</label>"
+        + "<label>Page Url</label><input placeholder=\"Element Id\" class=\"myText\" type=\"hidden\" id=\"txtIntroPageUrl\" name=\"txtIntroPageUrl\" value=\"" + obj.pageUrl + "\" >"
+        + "<label>Element Id</label><input placeholder=\"Element Id\" required readonly class=\"myText\" type=\"text\" id=\"txtIntroElementId\" name=\"txtIntroElementId\" value=\"" + obj.elementId + "\" >"
+        + "<label>Help Message</label><input placeholder=\"Enter Message\" required tabindex=\"1\" class=\"myText\" type=\"text\" id=\"txtIntroMsg\" name=\"txtIntroMsg\" value=\"" + obj.msg + "\" >"
+        + "<label>Step Number</label><input placeholder=\"Enter Step Number\" required tabindex=\"2\" class=\"myText\" type=\"text\" id=\"txtIntroStep\" name=\"txtIntroStep\" value=\"" + obj.step + "\">"
+        + "<label>Display Position</label><input placeholder=\"Enter Position (right or left)\" tabindex=\"3\" class=\"myText\" type=\"text\" id=\"txtIntroPosition\" name=\"txtIntroPosition\" value=\"" + obj.position + "\">"
+        + "</div></form>";
     introHTMLArray.push(htmlMsg);
     // $.each(obj, function (prop, value) {
     //     var html = "<div><label for=\"myonoffswitch-" + prop + "\">" + camelToDash(prop) + "</label>" +
@@ -179,7 +179,7 @@ var onClickProcess = function (element, settings, comparedCSS) {
     // console.log('window.parent', window.parent);
     // console.log('window.frameElement', window.frameElement);
 
-    setTimeout(function() { $("#txtIntroMsg").focus();}, 500);
+    setTimeout(function () { $("#txtIntroMsg").focus(); }, 500);
 
     swal({
         title: "Adding Help to <strong>" + pageUrl + "</strong>",
@@ -198,8 +198,22 @@ var onClickProcess = function (element, settings, comparedCSS) {
                 swal("Please select element", "Element is not selected, please check", "failed");
             }
             else {
+                let btnSubmit = jQuery(".confirm");
+                btnSubmit.attr("disabled", true);
+                let btnClose = jQuery(".cancel");
+                btnClose.attr("disabled", true);
                 Util.addItem(obj);
-                swal("Good job!", "Successfully added help in system", "success");
+                let apiUpdateUrl = form.attr('action');
+                Util.updateServer(apiUpdateUrl, obj
+                    , function (data) {
+                        btnSubmit.attr("disabled", false);
+                        btnClose.attr("disabled", false);
+                        swal("Good job!", "Successfully added help in system", "success");
+                    }, function (data) {
+                        btnSubmit.attr("disabled", false);
+                        btnClose.attr("disabled", false);
+                        swal("Error", "Error has occured while saving data on server please try again " + data, "error");
+                    });
             }
         });
     });
@@ -270,8 +284,8 @@ jQuery(document).on("click", ".css-spy-tab", function () {
 
 
 //GB:070120 to hide sweet-overlay for iframe content
-$(function() {
+$(function () {
     if (window.self != window.top) {
-      $(document.body).addClass("in-iframe");
+        $(document.body).addClass("in-iframe");
     }
-  });
+});

@@ -38,7 +38,7 @@ class Util {
     }
     static updateItem(item) {
         Util.data.forEach((element, index) => {
-            if(element.pageUrl === item.pageUrl && element.elementId === item.elementId) {
+            if (element.pageUrl === item.pageUrl && element.elementId === item.elementId) {
                 Util.data[index] = item;
             }
         });
@@ -50,12 +50,12 @@ class Util {
             result[this.name] = this.value;
         });
         console.log('result', result);
-        
-        let pageUrl =  result.txtIntroPageUrl;
-        let elementId =  result.txtIntroElementId;
-        let msg =  result.txtIntroMsg;
-        let step =  result.txtIntroSte || 1;
-        let position =  result.txtIntroPosition || 'right';
+
+        let pageUrl = result.txtIntroPageUrl;
+        let elementId = result.txtIntroElementId;
+        let msg = result.txtIntroMsg;
+        let step = result.txtIntroSte || 1;
+        let position = result.txtIntroPosition || 'right';
         if (!pageUrl || !elementId) {
             return null;
         }
@@ -75,7 +75,7 @@ class Util {
                 found = true;
                 return d;
             }
-          });
+        });
         if (createNew && !rtn) {
             rtn = Util.convertToObj(rtn, pageUrl, elementId, '', 1, 'right');
         }
@@ -120,5 +120,24 @@ class Util {
         let o = new HelpData();
         o = { ...d };
         return o;
+    }
+
+    static updateServer(apiUpdateUrl, obj, callbackSuccess, callbackFailure) {
+        console.log('updateserver', apiUpdateUrl, obj);
+        jQuery.ajax({
+            type: "POST",
+            url: apiUpdateUrl,
+            data: obj,
+            timeout: 60 * 1000,
+            dataType: 'json',
+            success: function (data) {
+                console.log('success updateserver', data);
+                callbackSuccess(data);
+            },
+            error: function (xhr, status, error) {
+                console.log('error', status, xhr, error);
+                callbackFailure(error);
+            }
+        });
     }
 }
