@@ -12,7 +12,7 @@
       "js": [ "js/jquery-2.2.3.min.js", "js/jquery.dom-outline-1.0.js", "js/selectorator.min.js", "js/data.js", "js/css-spy.js", "js/sweetalert.min.js" ],
       "matches": [ "http://*/*", "https://*/*" ]
    } ],
-   "description": "My Showing CSS attribute on element hover",
+   "description": "factoHR Instant Help Editor",
    "icons": {
       "128": "images/icon128.png",
       "16": "images/icon16.png",
@@ -20,10 +20,10 @@
    },
    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh0JwxNASMyuKQPsAs1FT4jfBrGRKfVgLA2g7wSkb5ZujXoRpavp5IrCsweUAHHO4TZNEn6MUNNbaTx3/Bz9fXbci60h4i1mg8Wr9baeUDhTMsHVFwePZm/rDsHUTRov/h894tPwmejIn+fkhQY+gIafYi1tqvYTFgqlV0a2v/AOSsAzL6K0VG758Cn5MulqRXve93T2imwI2xTLaybA/YVJVIL3l5pMp9/VO3IHkzJYvJOMd6XX0bfmuQoj+6TIG0BshuI4k0wPGQDFsMouY73HTTQ+AkDCp1nWit21aB2Z7xFkwns2g7IJMcnjHyM/RhJlcGAKnpoJo3DWgqeMjLwIDAQAB",
    "manifest_version": 2,
-   "name": "My CSS Spy",
+   "name": "factoHR Instant Help",
    "offline_enabled": false,
    "permissions": [ "tabs", "http://*/*", "https://*/*", "storage", "activeTab" ],
-   "short_name": "my-css-spy",
+   "short_name": "factoHR-instant-help",
    "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "1.5"
 }

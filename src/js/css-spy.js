@@ -121,10 +121,7 @@ var onClickProcess = function (element, settings, comparedCSS) {
     //     "<div class='css-spy-settings-lists'>" + settingHTMLArray.join("\r\n") + "</div>" +
     //     "</div>";
 
-    var pageUrl = document.URL;
-    if (window.frameElement) {
-        pageUrl = window.frameElement.src;
-    }
+    
     // console.log('settings', settings);
 
     //     var inputHTML = "<div id='myModal' class='modal'>"+
@@ -136,7 +133,8 @@ var onClickProcess = function (element, settings, comparedCSS) {
 
 
     var introHTMLArray = [];
-    //debugger;
+    debugger;
+    var pageUrl = Util.getRelativeUrl();
     var obj = Util.getItem(pageUrl, element.id, true, false);
     console.log('obj', obj);
 
@@ -153,7 +151,7 @@ var onClickProcess = function (element, settings, comparedCSS) {
         + "<label>Page Url</label><input placeholder=\"Element Id\" class=\"myText\" type=\"hidden\" id=\"txtIntroPageUrl\" name=\"txtIntroPageUrl\" value=\"" + obj.pageUrl + "\" >"
         + "<label>Element Id</label><input placeholder=\"Element Id\" required readonly class=\"myText\" type=\"text\" id=\"txtIntroElementId\" name=\"txtIntroElementId\" value=\"" + obj.elementId + "\" >"
         + "<label>Help Message</label><input placeholder=\"Enter Message\" required tabindex=\"1\" class=\"myText\" type=\"text\" id=\"txtIntroMsg\" name=\"txtIntroMsg\" value=\"" + obj.msg + "\" >"
-        + "<label>Step Number</label><input placeholder=\"Enter Step Number\" required tabindex=\"2\" class=\"myText\" type=\"text\" id=\"txtIntroStep\" name=\"txtIntroStep\" value=\"" + obj.step + "\">"
+        + "<label>Step Number</label><input placeholder=\"Enter Step Number\" required tabindex=\"2\" class=\"myText\" type=\"text\" id=\"txtIntroStep\" name=\"txtIntroStep\" value=\"" + obj.stepNumber + "\">"
         + "<label>Display Position</label><input placeholder=\"Enter Position (right or left)\" tabindex=\"3\" class=\"myText\" type=\"text\" id=\"txtIntroPosition\" name=\"txtIntroPosition\" value=\"" + obj.position + "\">"
         + "</div></form>";
     introHTMLArray.push(htmlMsg);
@@ -204,6 +202,7 @@ var onClickProcess = function (element, settings, comparedCSS) {
                 btnClose.attr("disabled", true);
                 Util.addItem(obj);
                 let apiUpdateUrl = form.attr('action');
+                apiUpdateUrl = Util.getApiUrl(apiUpdateUrl);
                 Util.updateServer(apiUpdateUrl, obj
                     , function (data) {
                         btnSubmit.attr("disabled", false);
@@ -288,4 +287,5 @@ $(function () {
     if (window.self != window.top) {
         $(document.body).addClass("in-iframe");
     }
+    Util.loadServerData(null);
 });
