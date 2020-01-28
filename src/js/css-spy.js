@@ -133,7 +133,7 @@ var onClickProcess = function (element, settings, comparedCSS) {
 
 
     var introHTMLArray = [];
-    debugger;
+    // debugger;
     var pageUrl = Util.getRelativeUrl();
     var obj = Util.getItem(pageUrl, element.id, true, false);
     console.log('obj', obj);
