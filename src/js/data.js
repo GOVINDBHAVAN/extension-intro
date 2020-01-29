@@ -8,7 +8,7 @@ class HelpData {
 
 class Util {
     //factoHR ignore these query string
-    static ignoreTags = ["_dc=", "empdata=", "empdataid=", "key=", "id=", "ignore=", "d=", "a=", "pageName="];
+    static ignoreTags = ["_dc=", "empdata=", "empdataid=", "key=", "id=", "ignore=", "d=", "a=", "pageName=","employeeid="];
     static data = [];
     static log = true;
     static getKey(pageUrl, elementId) {
@@ -127,7 +127,7 @@ class Util {
         if (foundCurrentStep > 0) {
             rtn.stepNumber = foundCurrentStep;
         }
-        if (orgStep && parseInt(orgStep) > 0) {
+        if (orgStep && parseInt(orgStep) > 1) {
             rtn.stepNumber = parseInt(orgStep);
         }
         return rtn;
