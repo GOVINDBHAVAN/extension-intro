@@ -196,6 +196,9 @@ class Util {
                 rtn += '?' + qs.join('&');
             }
         }
+        if (rtn.endsWith('#', 1)) {
+            rtn = rtn.substr(0, rtn.length - 1);
+        }
         return rtn;
     }
 
